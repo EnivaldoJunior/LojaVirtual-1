@@ -6,18 +6,26 @@ using System.Threading.Tasks;
 
 namespace Modelo
 {
+
     public class Produtos
     {
+
+
         public IList<Produto> Lista()
         {
-            using(var session = NHibernateHelper.OpenSession())
-            {
+            using (var session = NHibernateHelper.OpenSession())
                 return session.QueryOver<Produto>()
-                              .List();
-            }
+                    .Fetch(p => p.Categoria)
+                    .Eager
+                    .Fetch(p => p.Fornecedor)
+                    .Eager
+                    .List();
         }
 
-        public virtual void Salvar(Produto produto)
+
+
+   
+        public void Salvar(Produto produto)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -27,13 +35,19 @@ namespace Modelo
         }
 
         public virtual Produto Por(Guid? id)
+
         {
             using (var session = NHibernateHelper.OpenSession())
             {
-                return session.Get<Produto>(id);
+                return session.QueryOver<Produto>()
+                    .Where(p => p.Id == id)
+                    .Fetch(p => p.Categoria)
+                    .Eager
+                    .Fetch(p => p.Fornecedor)
+                    .Eager
+                    .SingleOrDefault();
             }
         }
-
         public virtual void Apagar(Guid id)
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -45,5 +59,8 @@ namespace Modelo
                 session.Flush();
             }
         }
-    }
-}
+    }   
+ }
+
+
+

@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace Modelo
 {
+
     public class Categorias
     {
+
+
         public IList<Categoria> Lista()
         {
-            using(var session = NHibernateHelper.OpenSession())
-            {
+            using (var session = NHibernateHelper.OpenSession())
                 return session.QueryOver<Categoria>()
-                              .List();
-            }
+                    .List();
         }
 
-        public virtual void Salvar(Categoria categoria)
+   
+        public void Salvar(Categoria categoria)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -27,13 +29,13 @@ namespace Modelo
         }
 
         public virtual Categoria Por(Guid? id)
+
         {
-            using (var session = NHibernateHelper.OpenSession())
+            using (var sesion = NHibernateHelper.OpenSession())
             {
-                return session.Get<Categoria>(id);
+                return sesion.Get<Categoria>(id);
             }
         }
-
         public virtual void Apagar(Guid id)
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -45,5 +47,8 @@ namespace Modelo
                 session.Flush();
             }
         }
-    }
-}
+    }   
+ }
+
+
+

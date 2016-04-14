@@ -1,0 +1,47 @@
+﻿@model List<LojaVirtualCleiton.Models.ProdutoListaViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Lista de  Produtos</h2>
+
+<a href="@Url.Action("Editar","Produto")"> Novo Produto</a>
+
+<table>
+    <tr>   
+         
+    <th>
+    Nome
+    </th>
+
+     <th>
+    Categoria
+     </th>
+
+        <th>
+            Fornecedor
+        </th>
+
+        <th>
+            Opções de edição
+        </th>
+    </tr>
+
+
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Nome</td>
+            <td>@item.Categoria</td>
+            <td>@item.Fornecedor</td>
+            <td>
+                @Html.ActionLink("Editar","Editar","Produto", new { id = item.Id }, null)
+
+                @Html.ActionLink("Apagar", "Apagar", "Produto", new { id = item.Id }, null)
+       </td>
+</tr>
+    }
+
+</table>
+
+
